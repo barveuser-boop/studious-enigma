@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>SL×BLACK SHADOW MODz - AI PHOTO GENERATOR</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Montserrat:wght@700;800;900&display=swap" rel="stylesheet">
+<style>
+/* ====== RESET ====== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+:root {
+  --bg: #0f1117;
+  --bg-light: #171920;
+  --bg-card: #1b1e27;
+  --primary: #4c8dff;
+  --primary-dark: #3c6fd6;
+  --text: #e3e3e3;
+  --text-light: #bdbdbd;
+  --shadow: 0 6px 18px rgba(0, 0, 0, 0.35);
+  --shadow-soft: 0 4px 12px rgba(0, 0, 0, 0.22);
+  --radius: 14px;
+  --transition: 0.25s ease;
+  --container-padding: 1rem;
+}
+body {
+  font-family: 'Poppins', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  padding-bottom: 60px;
+}
+
+/* ====== CONTAINER ====== */
+.container {
+  width: 95%;
+  max-width: 1200px;
+  margin: auto;
+  padding: var(--container-padding);
+}
+
+/* ====== HEADER ====== */
+.professional-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  padding: 1.5rem 0;
+}
+
+.logo-section {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.logo-icon {
+  font-size: 2.5rem;
+  color: var(--primary);
+}
+
+.logo-text h1 {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: var(--text);
+}
+
+.channel-section {
+  padding: 0.7rem 1.3rem;
+  border-radius: var(--radius);
+  background: var(--bg-card);
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  box-shadow: var(--shadow-soft);
+  transition: var(--transition);
+}
+
+.channel-section:hover {
+  transform: translateY(-3px);
+}
+
+.join-btn {
+  background: var(--primary);
+  padding: 0.5rem 1.2rem;
+  border: none;
+  border-radius: var(--radius);
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.join-btn:hover {
+  background: var(--primary-dark);
+  transform: translateY(-2px);
+}
+
+/* ====== WELCOME ====== */
+.welcome-section {
+  background: var(--bg-card);
+  padding: 3rem 1rem;
+  border-radius: var(--radius);
+  text-align: center;
+  box-shadow: var(--shadow);
+}
+
+.welcome-icon {
+  font-size: 4rem;
+  color: var(--primary);
+}
+
+.welcome-text h2 {
+  font-size: 2.2rem;
+  margin-top: 1rem;
+  font-weight: 700;
+}
+
+.welcome-text p {
+  max-width: 600px;
+  margin: 0.8rem auto;
+  color: var(--text-light);
+  line-height: 1.5rem;
+}
+
+/* ====== MAIN GRID ====== */
+.main-content {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2.5rem;
+  margin-top: 3rem;
+}
+
+.input-section,
+.output-section {
+  background: var(--bg-card);
+  padding: 1.8rem;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  transition: var(--transition);
+}
+
+.input-section:hover,
+.output-section:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.35);
+}
+
+label {
+  color: var(--primary);
+  font-weight: 500;
+  margin-bottom: 0.4rem;
+  display: block;
+}
+
+.prompt-input {
+  width: 100%;
+  min-height: 120px;
+  padding: 1rem;
+  background: #0f1117;
+  border: 1px solid #22252f;
+  border-radius: var(--radius);
+  color: var(--text);
+  font-size: 1rem;
+  resize: vertical;
+}
+
+.prompt-input:focus {
+  border-color: var(--primary);
+  outline: none;
+}
+
+/* ====== RATIO BUTTONS ====== */
+.aspect-ratio-selector {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.ratio-option {
+  padding: 0.8rem;
+  text-align: center;
+  background: #0f1117;
+  border-radius: var(--radius);
+  cursor: pointer;
+  border: 1px solid #22252f;
+  transition: var(--transition);
+}
+
+.ratio-option.active {
+  background: var(--primary);
+  color: white;
+}
+
+/* ====== GENERATE BUTTON ====== */
+.generate-btn {
+  width: 100%;
+  padding: 1.1rem;
+  background: var(--primary);
+  border: none;
+  border-radius: var(--radius);
+  color: white;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  margin-top: 1rem;
+}
+
+.generate-btn:hover {
+  background: var(--primary-dark);
+}
+
+/* ====== IMAGE PLACEHOLDER ====== */
+.image-placeholder {
+  width: 100%;
+  aspect-ratio: 16/9;
+  background: #0f1117;
+  border-radius: var(--radius);
+  border: 1px solid #22252f;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #999;
+  min-height: 250px;
+}
+
+.generated-image {
+  max-width: 100%;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+}
+
+/* ====== IMAGE ACTIONS ====== */
+.image-actions {
+  margin-top: 1.2rem;
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.action-btn {
+  padding: 0.8rem 1.4rem;
+  border-radius: var(--radius);
+  background: var(--bg-light);
+  border: 1px solid #22252f;
+  color: var(--text);
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.action-btn:hover {
+  background: #22252f;
+}
+
+/* ====== FEATURES ====== */
+.features {
+  margin-top: 3rem;
+  display: grid;
+  gap: 1.5rem;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+}
+
+.feature-card {
+  background: var(--bg-card);
+  padding: 1.5rem;
+  border-radius: var(--radius);
+  text-align: center;
+  box-shadow: var(--shadow-soft);
+  transition: var(--transition);
+}
+
+.feature-card:hover {
+  transform: translateY(-4px);
+}
+
+.feature-icon {
+  font-size: 2.3rem;
+  color: var(--primary);
+}
+
+/* ====== FOOTER ====== */
+footer {
+  margin-top: 3rem;
+  text-align: center;
+  color: var(--text-light);
+  font-size: 0.9rem;
+}
+
+/* ====== POPUP ====== */
+#popupMSG {
+  position: fixed;
+  bottom: 20px;
+  right: 5%;
+  left: 5%;
+  width: auto;
+  max-width: 350px;
+  background: #222;
+  color: #fff;
+  padding: 15px 20px;
+  border-radius: 10px;
+  box-shadow: 0 5px 20px rgba(0,0,0,0.4);
+  font-family: sans-serif;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+  z-index: 99999;
+}
+
+/* ====== MEDIA QUERIES ====== */
+@media (max-width:900px) {
+  .main-content {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width:500px) {
+  .professional-header,
+  .welcome-section,
+  .input-section,
+  .output-section {
+    padding: 1rem;
+  }
+  h2 {
+    font-size: 1.6rem;
+  }
+  .prompt-input {
+    min-height: 90px;
+    font-size: 0.9rem;
+  }
+  .aspect-ratio-selector {
+    flex-direction: column;
+    gap: 0.7rem;
+  }
+  .ratio-option {
+    width: 100%;
+    text-align: center;
+  }
+}
+</style>
+</head>
+<body>
+<div class="container">
+
+  <!-- HEADER -->
+  <div class="professional-header">
+    <div class="logo-section">
+      <div class="logo-text">
+        <h1>SL×BLACK SHADOW MODz</h1>
+      </div>
+    </div>
+    <div class="channel-section">
+      <i class="fab fa-whatsapp channel-icon"></i>
+      <div class="channel-text">
+        <h3>Contact Dev</h3>
+        <p>Click below</p>
+      </div>
+      <button class="join-btn" onclick="window.open('https://blackshadowmodzoffcial.vercel.app/', '_blank')">
+        <i class="fas fa-external-link-alt"></i> Get
+      </button>
+    </div>
+  </div>
+
+  <!-- POPUP -->
+  <div id="popupMSG">
+    © 2025 SL×BLACK SHADOW MODZ. All Rights Reserved.
+    Unauthorized copying, editing, or distribution of any content is prohibited.
+  </div>
+
+  <!-- WELCOME -->
+  <div class="welcome-section">
+    <div class="welcome-text">
+      <h2>SL×BLACK SHADOW MODz!</h2>
+      <p>Create stunning AI-generated images with our powerful tool.</p> 
+      <p>ඔයාගේ අදහස්ම අලංකාර AI පින්තූර වලට හැරවන්න!</p>
+    </div>
+  </div>
+
+  <!-- MAIN CONTENT -->
+  <div class="main-content">
+
+    <!-- INPUT -->
+    <div class="input-section">
+      <div class="form-group">
+        <label for="prompt"><i class="fas fa-pencil-alt"></i> Image Description</label>
+        <textarea id="prompt" class="prompt-input" placeholder="Describe the image you want to generate..."></textarea>
+      </div>
+      <button id="generate-btn" class="generate-btn">
+        <i class="fas fa-magic"></i> Generate Image
+      </button>
+    </div>
+
+    <!-- OUTPUT -->
+    <div class="output-section">
+      <div class="image-placeholder" id="image-placeholder">
+        <i class="fas fa-image"></i>
+        <p>SL×BLACK SHADOW MODz!</p>
+      </div>
+      <img id="generated-image" class="generated-image" style="display:none;">
+      <div class="image-actions">
+        <button id="download-btn" class="action-btn download-btn">
+          <i class="fas fa-download"></i> Download Image
+        </button>
+        <button id="share-btn" class="action-btn share-btn">
+          <i class="fas fa-share-alt"></i> Share Image
+        </button>
+      </div>
+      <div class="url-section">
+        <label class="url-label"><i class="fas fa-link"></i> Image URL</label>
+        <input type="text" id="image-url" class="url-input" readonly>
+        <button id="copy-url-btn" class="action-btn share-btn" style="margin-top:0.5rem;width:100%;">
+          <i class="fas fa-copy"></i> Copy URL
+        </button>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <p class="credit"> <a href="https://Wa.me/+94776477438?text=SHADOW_" target="_blank" style="color: var(--primary); text-decoration: none;">request No : 6C948K92I</a></p>
+  </footer>
+
+</div>
+
+<!-- JS POPUP -->
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+    const popup = document.getElementById("popupMSG");
+    setTimeout(() => { popup.style.opacity = "1"; }, 300);
+    setTimeout(() => { popup.style.opacity = "0"; }, 4000);
+});
+</script>
+
+</body>
+  </html>
